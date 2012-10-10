@@ -5,6 +5,7 @@ OBJECTS=host.o win32kbd.o
 $(TARGET): $(UNCOMPRESSED)
 	rm -f $@
 	upx --best -o $@ $<
+	touch $@
 
 $(UNCOMPRESSED): $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
