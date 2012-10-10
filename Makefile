@@ -3,6 +3,7 @@ UNCOMPRESSED=host_uc.exe
 OBJECTS=host.o win32kbd.o
 
 $(TARGET): $(UNCOMPRESSED)
+	rm -f $@
 	upx --best -o $@ $<
 
 $(UNCOMPRESSED): $(OBJECTS)
