@@ -2,8 +2,6 @@ TARGET=host.exe
 UNCOMPRESSED=host_uc.exe
 OBJECTS=host.o win32kbd.o
 
-all: $(TARGET)
-
 $(TARGET): $(UNCOMPRESSED)
 	upx --best -o $@ $<
 
