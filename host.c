@@ -28,7 +28,6 @@ void send_byte(uint8_t data) {
 
 /* Send len bytes from data */
 void send_bytes(const uint8_t *data, const int len) {
-	printf("sending %d bytes from address 0x%x\n", len, data);
 	int i;
 	for (i = 0; i < len; i++) {
 		send_byte(data[i]);
