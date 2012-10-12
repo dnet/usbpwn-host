@@ -12,6 +12,7 @@ void send_frame(const uint8_t frame) {
 	set_lock(CAPS, (frame & 0x02) == 0x02);
 	set_lock(SCROLL, 1);
 	printf("sending frame 0x%02x...", frame);
+	printf("got 0x%02x from getchar\n", getchar());
 	toggle_key(SCROLL);
 }
 
