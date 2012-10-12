@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "win32kbd.h"
 
@@ -35,5 +36,32 @@ void send_bytes(const uint8_t *data, const int len) {
 }
 
 int main(int argc, char** argv) {
+	FILE *infile;
+	uint32_t filepos, filelen;
+	char inbuf, filelen_str[16];
+
+	if (argc < 2) {
+		fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+		return 1;
+	}
+
+	infile = fopen(argv[1], "rb");
+	if (!infile) {
+		fprintf(stderr, "Cannot open file %s\n", argv[1]);
+		return 1;
+	}
+
+	fseek(infile, 0, SEEK_END);
+	filelen = ftell(infile);
+	fseek(infile, 0, SEEK_SET);
+	sprintf(filelen_str, "--%d--", filelen);
+	send_bytes((uint8_t*)filelen_str, strlen(filelen_str));
+	for (filepos = 0; filepos < filelen; filepos++) {
+		fread(&inbuf, 1, 1, infile);
+		send_byte(inbuf);
+	}
+	fclose(infile);
+
+	printf("Sent bytes\n");
 	return 0;
 }
