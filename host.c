@@ -11,11 +11,13 @@ void send_frame(const uint8_t frame) {
 	set_lock(NUM,  (frame & 0x01) == 0x01);
 	set_lock(CAPS, (frame & 0x02) == 0x02);
 	set_lock(SCROLL, 1);
+	printf("sending frame 0x%02x...", frame);
 	toggle_key(SCROLL);
 }
 
 /* Send an 8-bit byte from LSB to MSB */
 void send_byte(uint8_t data) {
+	printf("sending byte 0x%02x\n", data);
 	uint8_t i;
 	for (i = 0; i < 4; i++) {
 		send_frame(data);
@@ -25,6 +27,7 @@ void send_byte(uint8_t data) {
 
 /* Send len bytes from data */
 void send_bytes(const uint8_t *data, const int len) {
+	printf("sending %d bytes from address 0x%x\n", len, data);
 	int i;
 	for (i = 0; i < len; i++) {
 		send_byte(data[i]);
